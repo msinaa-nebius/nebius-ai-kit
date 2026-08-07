@@ -15,9 +15,14 @@ you can already read.
 
 ## 1. Say what is about to happen
 
-Two sentences, no more. You are going to look at their profile, their projects and
-their spaces, show them what you found, and then build a map of their role. Then
-start. Do not wait for permission to read — reading is why they installed this.
+Three sentences, no more, and **name the systems out loud**: their directory profile,
+their Jira projects and recent issues, their Confluence spaces, their active Slack
+channels. Say you are only reading, that you will show them what you found, and that
+they can tell you to stop or to skip any of it.
+
+Then start. Do not turn this into a permission dialogue — reading is why they installed
+this — but do not read a cross-system inventory of somebody's activity while they think
+they installed three prompts. Naming it costs one sentence.
 
 Match their language from their first message and keep it for the whole session.
 
@@ -28,10 +33,11 @@ Use whichever connectors respond. Do not stop when one fails; note it and contin
 - **Who they are** — display name, job title, department, location, manager if the
   directory exposes it. (Microsoft 365 `get_me`, Atlassian `atlassianUserInfo`,
   Slack profile lookup.)
-- **What they work on** — the Jira projects visible to them, and their assigned or
-  recently updated issues (`assignee = currentUser()` ordered by updated, last 90
-  days). The project keys that show up repeatedly are their real ones, whatever the
-  org chart says.
+- **What they have been working on** — the Jira projects visible to them, and their
+  assigned or recently updated issues (`assignee = currentUser()` ordered by updated,
+  last 90 days). Call these **projects with recent activity**, not their scope. Someone
+  covering another team for six weeks looks busiest exactly where they are least
+  responsible, and long-term accountabilities often generate few assigned tickets.
 - **Where their team documents things** — the Confluence spaces they can see, and
   which ones their recent issues actually link to.
 - **Where they talk** — their most active channels.
@@ -66,8 +72,13 @@ make them fix it now.
 
 ## 4. Build the role map
 
-Run the `nebius-role-map` procedure with what you just confirmed. Do not summarise
-it here — follow that file.
+Run the `nebius-role-map` procedure with what you just confirmed. Do not summarise it
+here — follow that file, including its rule about what a search can and cannot conclude.
+
+Two things this step must not become. It is a **first pass**, not an audit: it produces
+a routing table and a set of questions. And the responsibilities it starts from are
+**candidates taken from a job advert** — the person strikes out what isn't theirs and
+adds what's missing before anything is graded.
 
 ## 5. Land it on something real
 
@@ -85,10 +96,11 @@ question they should be taking to their manager this week.
 
 ## 6. Close in three lines
 
-- Their role map lives at `~/nebius-ai/ROLE-MAP.md`. It is theirs, it is private, and
-  they can edit it by hand.
+- If they agreed to save it, their role map is at `~/nebius-ai/ROLE-MAP.md` — theirs,
+  private, and safe to edit by hand in the reserved section.
 - Ask in plain language; they do not need to remember skill names.
-- Rerun `nebius-role-map` when they change team or project, or in a few months.
+- Rerun `nebius-role-map` when they change team or project, or in a few months. Treat an
+  older map as a lead, not as truth.
 
 Then stop. Do not offer a tour, a cheat sheet or next steps.
 
