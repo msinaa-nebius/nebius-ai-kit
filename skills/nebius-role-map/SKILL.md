@@ -62,6 +62,15 @@ treat location as one signal among several rather than a filter.
   `IT infrastructure engineer (RMA & Diag)`) are different jobs in one family. Use the
   closest, and say which you used and which you rejected. The person can correct you;
   they cannot correct a choice you made silently.
+- **Check whether the body is a template before trusting it.** Fetch one adjacent
+  title from the same family and compare bodies. If two postings with *different*
+  titles share a near-identical body (verified live in August 2026: the generalist
+  and the RMA & Diag postings above were word-for-word identical), the body cannot
+  distinguish those roles. Say so in the output and treat the candidate list as a
+  **floor** — the minimum the role includes — never as its outline. A templated
+  body makes the person's own corrections and the manager questions carry the real
+  weight; a specialised bullet in a templated body (e.g. RMA) must not be read as
+  the role's centre of gravity.
 
 Keep the role paragraph and the responsibilities list. Discard requirements, benefits,
 culture and the equal-opportunity statement — none of it describes work.
