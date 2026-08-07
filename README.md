@@ -44,7 +44,6 @@ will ask you about out loud, showing you the file first.
 | `nebius-setup` | Runs once. Works out who you are and what you are accountable for, then builds your role map. |
 | `nebius-role-map` | Rebuilds that map. Run it when you change team, project or scope — or every few months. |
 | `nebius-ask` | "How do we do X here?" Answers from Confluence, Jira and Slack together, with sources, owners and — first of all — where those sources contradict each other. |
-| `nebius-loose-ends` | What you promised someone this week that has no ticket behind it. |
 
 You do not have to remember any of these names. Ask in plain language, in whatever
 language you prefer, and the right one runs. Typing the name works too if you like
@@ -72,10 +71,11 @@ your questions for week one, and most people take six months to find them.
   serials and customer data stay in the live systems where they belong. Nothing in
   this repository is internal, which is why the repository can be public, which is
   why you can install it without a terminal or a git client.
-- **It never writes to a shared system.** No skill here sends a Slack message,
-  creates or transitions a Jira issue, publishes a Confluence page, or replies to
-  an email. It will happily draft any of those into a local file for you to paste.
-  Anything other people can see, you send yourself.
+- **Nothing happens without you saying yes.** No skill here sends a Slack message,
+  creates or transitions a Jira issue, publishes a Confluence page or replies to an
+  email on its own. It drafts, it shows you the draft, and it asks. If you want it
+  sent, you say so — and it asks again next time, because permission is per action,
+  not per session. Anything other people can see, you approve first.
 - **It does not go stale, because it holds nothing that can.** The job posting is
   fetched live. Your sources are fetched live. Rebuild the map whenever you want; it
   costs minutes.
