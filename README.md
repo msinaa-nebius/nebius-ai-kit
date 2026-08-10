@@ -83,8 +83,9 @@ BASE = https://raw.githubusercontent.com/msinaa-nebius/nebius-ai-kit/v1/skills
    run the nebius-setup skill; if this session has not picked the skill up
    yet, read the installed nebius-setup/SKILL.md and follow it directly, or
    tell me to restart the session and say "get started". If verification
-   failed at every destination, say which files failed and stop — never run a
-   partial install.
+   If no destination ended verified-or-kept — failures or every destination
+   skipped — say which files failed or why everything was skipped, and stop:
+   never run a partial install.
 ```
 
 Your assistant will ask you to approve a few things — fetching from
