@@ -18,7 +18,7 @@ Open Claude Code or Codex and paste this:
 ```
 Install the Nebius AI kit, pinned to release v1.
 
-BASE = https://raw.githubusercontent.com/REPLACE-ME/nebius-ai-kit/v1/skills
+BASE = https://raw.githubusercontent.com/msinaa-nebius/nebius-ai-kit/v1/skills
 
 1. Fetch BASE/MANIFEST.txt
 2. For every path listed there, fetch BASE/<path> and write it to BOTH
