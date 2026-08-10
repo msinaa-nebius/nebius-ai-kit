@@ -12,6 +12,12 @@ is the only reason this procedure exists.
 Read `~/nebius-ai/ROLE-MAP.md` first if it exists. It tells you their vocabulary,
 their projects and their spaces, and it turns a generic search into a good one.
 
+If it does not exist, say so in one line and derive the vocabulary yourself: their
+recent Jira issues give the internal terms and project keys, and their site's
+Confluence space gives the local naming. Do not skip phrasing 2 below just because
+the map is missing — an invented "system's words" guess beats not trying it, as long
+as you say it was a guess.
+
 ## Search three ways, not one
 
 A single query in the user's words finds a fraction of what exists. Run at least
@@ -27,6 +33,13 @@ three phrasings in parallel:
 Search Confluence, Jira and Slack, and SharePoint or mail where the work plainly lives
 there. Jira matters as much as Confluence and people forget it: recent tickets show what
 is being recorded, which is frequently not what the page says.
+
+**Bound every query, verified the hard way.** An unbounded Jira text search returns
+hundreds of kilobytes and dies before you read any of it. Scope JQL by project and
+date, request few results and only the fields you need, and ask for concise response
+formats where the tool offers them. If a result still overflows, **narrow and re-run**
+— never try to wade through the dump, and never treat an overflowed query as
+"searched".
 
 ## Reconcile, and lead with the conflict
 
@@ -55,6 +68,11 @@ with a pile of sources at the bottom.
 **3. How much to trust it.** Per source: who owns it, when it was **last modified** —
 not "reviewed", which is a different thing nobody recorded — and whether it is marked
 draft, WIP or TBD. A page nobody has touched in two years is a lead, not a procedure.
+Two tool realities: the tools return an **author**, not an owner — authors get
+deactivated, so derive the owning team from the space or from a "process owner" line
+in the body, never from the author's name. And quick search results return relative
+dates; when trust hinges on the actual date, fetch the page itself. That is one extra
+call per cited source — spend it on the sources you cite, not on everything you saw.
 
 **4. Where you looked and what you did not find.** Name the systems you searched, then
 say what did not turn up. Phrase it as *"I found no page covering the rollback step in

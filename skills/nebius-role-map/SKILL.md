@@ -110,8 +110,16 @@ responsibility marked not-found when its procedure was never in a system you loo
 is a false alarm, and false alarms are how this kit loses credibility in week one.
 
 Record only: page title, URL, space, page status, **date last modified**, the owning
-**team or role**, and the Jira project key or filter. One line of purpose in your own
-words.
+**team or role**, and the Jira project key or filter. An individual issue key may be
+recorded **as a pointer** where it is itself the evidence — never its contents. One
+line of purpose in your own words.
+
+Two tool realities, verified live. Confluence returns an **author**, not an owner —
+and authors get deactivated. Derive the owning team from the *space* (a site space
+belongs to that site's team) or from an explicit "process owner" line in the page
+body; never record the author's name as the owner. And search results return last
+modified as a **relative, localised string** ("hace 6 horas") — when a grade depends
+on the actual date, fetch the page itself for the absolute date.
 
 Say *last modified*, never *reviewed*. They are not the same thing and the difference
 matters: a bot reformatting an obsolete page yesterday does not make it current.
@@ -143,7 +151,7 @@ and presenting that exception as the norm is the kind of error that hurts someon
 |---|---|
 | **Documented** | A maintained page covers it, and recent tickets are consistent with it. |
 | **Partial** | A page covers part of it. List *only* what is not covered — ownership, validation, rollback, escalation are the usual omissions. |
-| **Ageing** | A page exists and has not been modified in a long time. A warning, not a verdict: age alone does not make a procedure wrong. |
+| **Ageing** | A page exists and has not been modified in a long time — as a starting point, six months or more; say the threshold you used. A warning, not a verdict: age alone does not make a procedure wrong. |
 | **Draft only** | What exists is marked WIP, TBD, draft or proposed. Not a procedure — somebody's intention. |
 | **Contradicted** | Sources disagree. Record both, and apply the precedence above rather than picking the newest. |
 | **Not found** | Not found in the sources you searched. Name the sources. This is **not** a documentation gap; it is a question. |
@@ -168,6 +176,9 @@ reserved section that a rebuild **never touches**.
 # Role map — <name>
 
 Generated <date> · Posting used: <title, location, URL> · Posting rejected: <title>
+<If the template check found identical bodies, replace used/rejected with:
+"Posting family: <titles> — shared template body, treated as a floor.">
+
 Sources searched: <Confluence spaces, Jira projects, anything else>
 Not searched: <systems you could not reach>
 
@@ -210,9 +221,14 @@ without repeating the payload.
 
 One sentence, and be exact about its status:
 
-> First pass: **N** candidate responsibilities, **M** with a maintained procedure I
-> could find, **K** I could not find in *(sources)*. The K are questions in the file,
-> not proof that nothing exists.
+> First pass: **N** candidate responsibilities — **M** with a maintained procedure I
+> could find, **P** partially covered or draft-only, **K** I could not find in
+> *(sources)*, **U** not yet searched. The P and K are questions in the file, not
+> proof that nothing exists.
+
+Drop any count that is zero, and keep "not yet searched" whenever the pass was
+partial — a closing line that only admits found/not-found forces you to misreport
+the most common outcome, which is a mixed one.
 
 Then stop.
 
