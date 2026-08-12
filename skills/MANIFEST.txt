@@ -1,4 +1,4 @@
-# nebius-ai-kit v1
-6108abd75204aab2a3f9f577d04ae349b6d95eb766cb5ff90e61f91d588ee858  nebius-setup/SKILL.md
-f176d4dda06e148459bc16c7bedf761a602d2e187cf19edf62ecbfe3ea7570d5  nebius-role-map/SKILL.md
-91136cb89fd5a0ae57f1c55cb81a5aebbadae8555e628f4bd35b86414c85a32b  nebius-ask/SKILL.md
+# nebius-ai-kit v1.1
+73e4f44aa9598b49296ba0d97516b5037d2efb2173a3b3c6706fdd19d9906ef4  nebius-setup/SKILL.md
+3c05a9d2271619d62375d4deab919f77cfdfea11e74fd0fa52d4497583479407  nebius-role-map/SKILL.md
+2f7cfcf9a3d4a3df08c2d71eb8cffd5915709b27fec2f7247ea2654fd9c3f0a3  nebius-ask/SKILL.md

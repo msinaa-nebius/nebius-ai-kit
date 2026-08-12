@@ -1,5 +1,5 @@
 ---
-# nebius-ai-kit v1 — installed copies are managed; edits will be lost on update
+# nebius-ai-kit v1.1 — installed copies are managed; edits will be lost on update
 name: nebius-role-map
 description: Builds or rebuilds a Nebius employee's role map by taking the public job posting for their role as a list of candidate responsibilities, finding where each one is documented in their own Confluence and Jira, and turning what it cannot find into questions for their manager. Use when someone asks what their role covers, what's expected of them, where a procedure lives, what's missing in their team's documentation, when they change team or project, or says "rebuild my role map", "actualiza mi rol", "¿de qué soy responsable?", "обнови мою карту роли", "за что я отвечаю?", "waar ben ik verantwoordelijk voor?".
 ---
@@ -131,10 +131,19 @@ Both roads lead here — the fetch failed, or no posting matches (role never pos
 the posting has closed: Greenhouse only lists open roles, so absence proves nothing
 about the role). Say which happened in one line, then offer, in this order:
 
-1. **A person-provided baseline.** Ask them to paste their internal role description,
-   OKRs, or the responsibilities section of their offer — use it as the baseline and
-   label the map header `Baseline: person-provided (pasted <date>), no public
-   posting`. Every downstream step runs unchanged on that list.
+1. **A person-provided baseline.** Two forms, both first-class — not improvisation:
+   - **The public posting, supplied by them**: a URL they name (fetch it only
+     because they named it; if it cannot be reached, ask them to paste the text),
+     pasted text, a PDF, or screenshots. Extract only the role paragraph and the
+     responsibilities, exactly as step 1 does, and label the header `Baseline: public
+     posting, person-provided (<URL | pasted | PDF | screenshots>, <date>)`. Reading
+     a posting from images is done by eye — say so, and invite them to re-check the
+     extracted list against the original once.
+   - **Their internal role description, OKRs, or the responsibilities section of
+     their offer** — label it `Baseline: person-provided (pasted <date>), no public
+     posting`.
+
+   Every downstream step runs unchanged on either list.
 2. **A no-baseline map.** If they have nothing to paste, produce a map with only
    these sections: Sources searched / My corrections and notes / Questions to take
    to my manager (the first question is always: "can you share or point me to my
@@ -165,11 +174,14 @@ escalation" is only found by the original phrasing. Take internal vocabulary fro
 own tickets.
 
 Bound every query: scope by project and date, request few results and only the fields
-you need. If a result overflows, narrow and re-run — never treat an overflowed query
-as "searched". A search that timed out, hit a rate limit, errored mid-pagination or
-returned truncated results does **not** count as searched either: grade the affected
-responsibilities `coverage unknown`, and name the connector and the failure in
-"Not searched".
+you need. **Start narrow and widen** — a first query over a short window with a low
+result cap tells you the shape of the data for almost nothing; a broad first query
+gives you a truncated dump you must then distrust. If a result overflows, narrow and
+re-run — never treat an overflowed query as "searched". A search that timed out, hit
+a rate limit, errored mid-pagination or returned truncated results does **not** count
+as searched either: track every search as **complete, truncated or failed**, grade
+the responsibilities behind a truncated or failed one `coverage unknown`, and name
+the connector and the failure in "Not searched".
 
 Search Confluence and Jira. Where the person's work plainly lives elsewhere — SharePoint
 for logistics, Outlook for vendor correspondence — search there too if a connector
@@ -239,9 +251,22 @@ If they prefer, show the map in the session and save nothing — or save it to a
 different path if they name one (and any optional global line must then point at the
 path actually used).
 
+**If `~/nebius-ai/` cannot be written** — some environments only allow writing inside
+the current workspace — do not fail, and do not send them off to fix permissions
+mid-onboarding. Save to `nebius-ai/ROLE-MAP.md` inside the current workspace instead,
+and say two things plainly: where the map actually lives, and that `nebius-ask` looks
+in the home folder first and then in the workspace it runs from — so a question asked
+from a different folder will need the path once, unless the optional global line
+(which must then name this path, written absolute) is in place. **And if that
+workspace is a git repository, say so and offer to add `nebius-ai/` to its
+`.gitignore` before saving** — this file must never reach a shared remote, and a
+sandbox whose only writable folder is a git checkout is exactly where that happens
+by accident.
+
 **The `##` headings of the file are stable identifiers: write them in English,
 exactly as in this template, whatever the session language.** So are the first
-header line (`Generated <date> by nebius-ai-kit v1`) and the field labels of the
+header line (`Generated <date> by nebius-ai-kit v1.1` — rebuilds recognise it by
+`nebius-ai-kit`, so the version may differ) and the field labels of the
 `Confirmed by` line — they are identifiers, not prose; rebuilds recognise the file
 by them. The content under each heading goes in the person's language. A rebuild
 locates the reserved section by the exact line `## My corrections and notes`.
@@ -264,7 +289,7 @@ of three cases before writing anything:
 ```markdown
 # Role map — <name>
 
-Generated <date> by nebius-ai-kit v1 · Posting used: <title, location, URL> ·
+Generated <date> by nebius-ai-kit v1.1 · Posting used: <title, location, URL> ·
 Posting rejected: <title>
 <If the template check found identical bodies, replace used/rejected with:
 "Posting family: <titles> — shared template body, treated as a floor.">

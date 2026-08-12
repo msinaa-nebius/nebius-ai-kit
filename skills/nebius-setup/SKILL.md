@@ -1,5 +1,5 @@
 ---
-# nebius-ai-kit v1 — installed copies are managed; edits will be lost on update
+# nebius-ai-kit v1.1 — installed copies are managed; edits will be lost on update
 name: nebius-setup
 description: One-time onboarding for a Nebius employee's AI assistant. Works out who the person is and what their role is accountable for, then builds their role map. Use when someone says they just installed the Nebius kit, asks to set this up, says "get started", "onboard me", "configure this for my job", "empezar", "configúrame esto", "настрой это для моей работы", "aan de slag", or when they are clearly a new joiner asking what this assistant can do for their work.
 ---
@@ -16,7 +16,10 @@ you can already read. (The one exception is step 0-bis, for when there is nothin
 to read.)
 
 **If `~/nebius-ai/ROLE-MAP.md` already exists AND its header says it was generated
-by nebius-ai-kit, this has run before.** Say so, ask whether they want a rebuild
+by nebius-ai-kit, this has run before.** Check `nebius-ai/ROLE-MAP.md` inside the
+current workspace too — environments that cannot write to the home folder save
+there — and any path the person's global instructions already point at. Say so,
+ask whether they want a rebuild
 (`nebius-role-map`) or a genuinely fresh setup, and do nothing until they answer.
 A file there *without* that header is the person's own work, not evidence of a
 previous run — proceed with setup and let `nebius-role-map` step 5 handle the file.
@@ -27,9 +30,15 @@ English install block, ask, or follow the platform language.
 
 ## 0. Connector inventory — before announcing anything
 
-Look at your own tool list. You need to know which of these families exist in this
-session: **Atlassian** (Jira/Confluence tools), **Slack**, **Microsoft 365**. Check
-availability; do not call them just to probe.
+Look at your own tool list, and inventory by **capability, not by family** — a
+family being present says nothing about the one piece you will actually need.
+Verified live: a Microsoft 365 connector frequently exposes Outlook mail and
+calendar but **not SharePoint**, and "Microsoft 365: available" would claim
+coverage the session does not have. Check each of these separately, by whether a
+tool for it exists (do not call tools just to probe): **Jira**, **Confluence**,
+**Slack channel search**, **Outlook mail**, **Outlook calendar**, **SharePoint**.
+Report presence and absence at that grain — a capability whose likely home cannot
+be searched later is exactly what `coverage unknown` records.
 
 Tool names in this file are examples verified in one setup in August 2026 — use
 whatever equivalent your connectors expose, and if a named tool does not exist,
@@ -58,8 +67,11 @@ the session's language):
   nebius-ask loses its two main sources."
 - **Slack:** "Without this I can't see where your team talks or the informal
   answers that never made it to a page."
-- **Microsoft 365:** "Without this I can't confirm your name and title
-  automatically, or search mail/SharePoint when the work lives there."
+- **Outlook (mail/calendar):** "Without this I can't confirm your name and title
+  automatically, or search mail when the work lives there."
+- **SharePoint** (often missing even when Outlook works): "Without it I can't
+  search the document libraries some teams keep their procedures in — anything
+  living there stays `coverage unknown`, not 'missing'."
 
 How they get installed — tell the person, don't do it yourself (it's their account):
 claude.ai → Settings → Connectors, sign in with the Nebius account; Claude Code →
@@ -240,8 +252,9 @@ show them how to ask their manager for the written role description.
 ## 6. Close in three lines
 
 - If they agreed to save it, their role map is at `~/nebius-ai/ROLE-MAP.md` (or the
-  path they chose) — theirs, private, and safe to edit by hand in the reserved
-  section.
+  path they chose, or `nebius-ai/ROLE-MAP.md` in the workspace when the home folder
+  was not writable — say which) — theirs, private, and safe to edit by hand in the
+  reserved section.
 - Ask in plain language; they do not need to remember skill names.
 - Rerun `nebius-role-map` when they change team or project, or in a few months. Treat an
   older map as a lead, not as truth.
@@ -253,8 +266,8 @@ Then stop. Do not offer a tour, a cheat sheet or next steps.
 Their assistant only reads the role map when one of these skills runs. To make it read
 it in *every* conversation, one line has to reach their global instructions.
 
-**Offer this only if a map was actually saved** — to `~/nebius-ai/ROLE-MAP.md` or
-the path they chose — in this run or before. If they chose not to save, there is
+**Offer this only if a map was actually saved** — to `~/nebius-ai/ROLE-MAP.md`,
+to the workspace fallback, or to the path they chose — in this run or before. If they chose not to save, there is
 nothing for the line to read — do not offer it. The line must name the path
 actually used.
 
@@ -280,6 +293,10 @@ The line:
 ```
 Before answering anything about my work, read ~/nebius-ai/ROLE-MAP.md.
 ```
+
+When the map lives anywhere other than `~/nebius-ai/ROLE-MAP.md`, replace the path
+with the one actually used — written **absolute**, or the line is dead from every
+other folder.
 
 If they say no, everything still works — the skills read the map themselves. Say so
 once and move on without persuading.
