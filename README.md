@@ -188,6 +188,14 @@ and no owners, the skill did not fire — say its name (`nebius-ask`) and it wil
 session follows your language; the saved map keeps its English headings so rebuilds
 always find them.
 
+### Optional standalone skills
+
+These are shared separately and are not part of the pinned three-skill installer:
+
+| Skill | What it does |
+|---|---|
+| [`jira-personal-dashboard`](optional-skills/jira-personal-dashboard/) | Designs, creates and verifies a personal Jira dashboard with a global chart, an all-tickets view and mutually exclusive sections chosen for the person's actual role. |
+
 ---
 
 ## The one thing worth understanding
