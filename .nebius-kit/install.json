@@ -1,0 +1,19 @@
+{
+  "bundle_sha256": "cfa6c5a41a945695ddcae873fad1c35a0ba67a0bccfef958254cdd4b5a5f7e21",
+  "files": {
+    ".agents/skills/nebius-ask/SKILL.md": "c53994ea5b43b0d33908441868020871a3dca106b4718206489adfe336d66c50",
+    ".agents/skills/nebius-role-map/SKILL.md": "2f352c66b9891286cd2c23fd7870fc81f36f304f446a92d03893b57f349066c4",
+    ".agents/skills/nebius-setup/SKILL.md": "a400a93efd886d7408b4d1f1042eb4c9ef52cb3126424f965c18c84a56867fc5",
+    ".claude/skills/nebius-ask/SKILL.md": "c53994ea5b43b0d33908441868020871a3dca106b4718206489adfe336d66c50",
+    ".claude/skills/nebius-role-map/SKILL.md": "2f352c66b9891286cd2c23fd7870fc81f36f304f446a92d03893b57f349066c4",
+    ".claude/skills/nebius-setup/SKILL.md": "a400a93efd886d7408b4d1f1042eb4c9ef52cb3126424f965c18c84a56867fc5",
+    ".nebius-kit/WORKFLOWS.md": "a84efe4110da88de4f0c07d8a29e0c9f0ac6e527b10d34bff62efa3a4354fa74",
+    ".nebius-kit/doctor.py": "e7a1ebc981016a15be3be218b824fbbc08cff613424a4014a30efb078a8b51c3",
+    "AGENTS.md": "6909250de17f604678f130c4bb69641a493cefce96cb04cf8a0484000ba3a201",
+    "CLAUDE.md": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49",
+    "START_HERE.md": "4a97ab2515d20b2bbbf5df8ae8f76f0578dd147650586dde3d08b71534ee2885"
+  },
+  "installed_at": "2026-09-10T12:59:31.663634+00:00",
+  "schema": 1,
+  "version": "2.0.0-dev"
+}
