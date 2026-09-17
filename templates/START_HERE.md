@@ -25,17 +25,28 @@ This kit does not replace company onboarding, safety training or approved proced
 
 ## Everyday use
 
+Ask whenever you need help. Opening this folder does not start a daily review,
+and setup creates no scheduled checks or notifications.
+
 - “What do I have today?” — full open workload, recent changes and one next action.
+- “Walk me through this” — one useful step at a time, with an explanation.
+- “Prepare this meeting” — context, decisions needed and questions to bring.
+- “Draft a reply” — a ready-to-use message, without sending it.
 - “Explain this ticket” — meaning, recorded history, precedents and ownership.
 - “How do we do this here?” — sources, conflicts and what remains unknown.
 - “Rebuild my role map” — refresh scope without losing your corrections.
 - “Close the day” / “Prepare a handover” — a concise draft with confirmed facts,
-  open questions and the next action; saving requires your approval.
+  open questions and the next action; remember safe lessons if you opted in.
+- “What do you remember?” / “Correct this” / “Stop remembering” — inspect and
+  control the private context used by both assistants.
 
 Private context belongs in `.nebius-local/`. It is excluded from ordinary Git
-staging. Nothing is saved there during setup until you approve its contents.
+staging. During onboarding, you choose whether to let the assistant remember safe
+preferences and lessons there. With your initial consent it keeps those notes useful
+without asking every time, tells you what changed, and lets you correct or stop it.
+Uncertain decisions still need confirmation. Company records stay in their sources.
 The assistant never needs your password pasted into the chat.
 
-Your role map is optional. With no saved map, discovery may need repeating in a
+Your role map is optional. With no saved context, discovery may need repeating in a
 future session. Old maps elsewhere are not imported automatically: confirm the
 right person, team and destination first.

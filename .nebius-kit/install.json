@@ -1,17 +1,17 @@
 {
-  "bundle_sha256": "cfa6c5a41a945695ddcae873fad1c35a0ba67a0bccfef958254cdd4b5a5f7e21",
+  "bundle_sha256": "ca1dc01aae739cc9212837bbff1a1ad93d2e8e4d0bedd8143333ccb5b4c56a38",
   "files": {
-    ".agents/skills/nebius-ask/SKILL.md": "c53994ea5b43b0d33908441868020871a3dca106b4718206489adfe336d66c50",
-    ".agents/skills/nebius-role-map/SKILL.md": "2f352c66b9891286cd2c23fd7870fc81f36f304f446a92d03893b57f349066c4",
-    ".agents/skills/nebius-setup/SKILL.md": "a400a93efd886d7408b4d1f1042eb4c9ef52cb3126424f965c18c84a56867fc5",
-    ".claude/skills/nebius-ask/SKILL.md": "c53994ea5b43b0d33908441868020871a3dca106b4718206489adfe336d66c50",
-    ".claude/skills/nebius-role-map/SKILL.md": "2f352c66b9891286cd2c23fd7870fc81f36f304f446a92d03893b57f349066c4",
-    ".claude/skills/nebius-setup/SKILL.md": "a400a93efd886d7408b4d1f1042eb4c9ef52cb3126424f965c18c84a56867fc5",
-    ".nebius-kit/WORKFLOWS.md": "a84efe4110da88de4f0c07d8a29e0c9f0ac6e527b10d34bff62efa3a4354fa74",
-    ".nebius-kit/doctor.py": "e7a1ebc981016a15be3be218b824fbbc08cff613424a4014a30efb078a8b51c3",
-    "AGENTS.md": "6909250de17f604678f130c4bb69641a493cefce96cb04cf8a0484000ba3a201",
+    ".agents/skills/nebius-ask/SKILL.md": "edbf5a1a0af747e5f74681bcfdd6cb545befa5192e156544e579fb5ef81721bd",
+    ".agents/skills/nebius-role-map/SKILL.md": "8659cee171045b033cb96a80c5e1fb02b6294befa951fd72d782f80766e02b24",
+    ".agents/skills/nebius-setup/SKILL.md": "37e08323a48cf46bb6ebdbc8ffdc0f55e75870e8a58af76e8f31be1c16bda9b6",
+    ".claude/skills/nebius-ask/SKILL.md": "edbf5a1a0af747e5f74681bcfdd6cb545befa5192e156544e579fb5ef81721bd",
+    ".claude/skills/nebius-role-map/SKILL.md": "8659cee171045b033cb96a80c5e1fb02b6294befa951fd72d782f80766e02b24",
+    ".claude/skills/nebius-setup/SKILL.md": "37e08323a48cf46bb6ebdbc8ffdc0f55e75870e8a58af76e8f31be1c16bda9b6",
+    ".nebius-kit/WORKFLOWS.md": "c95520bd73b86bdb0758c97ff139614366ed8f734b6b814f6a71b238bce9aa6c",
+    ".nebius-kit/doctor.py": "af992058834799dcb9b55271c569e6970bf5be9a3fee435980b5084f530bed41",
+    "AGENTS.md": "4cb77e18e58b8304eca6a452059e565e77196c9bc38dd82e0d7835b4a46671fc",
     "CLAUDE.md": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49",
-    "START_HERE.md": "4a97ab2515d20b2bbbf5df8ae8f76f0578dd147650586dde3d08b71534ee2885"
+    "START_HERE.md": "f4b606987665a0f1420af093266f92b72eb9d8793e30bf8e0fd2e1c900db9178"
   },
   "installed_at": "2026-09-10T12:59:31.663634+00:00",
   "schema": 1,

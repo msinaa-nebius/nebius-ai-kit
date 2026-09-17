@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 from unittest.mock import patch
 
@@ -13,6 +14,7 @@ SOURCE = Path(__file__).absolute().parent.parent
 sys.path.insert(0, str(SOURCE / "scripts"))
 import bootstrap as kit
 import doctor
+import package as kit_package
 
 
 class BootstrapTests(unittest.TestCase):
@@ -240,6 +242,127 @@ class BootstrapTests(unittest.TestCase):
                              capture_output=True, text=True)
         self.assertNotEqual(run.returncode, 0)
         self.assertIn("outside global", run.stderr)
+
+    def test_missing_git_in_repository_fails_before_any_write(self):
+        with patch.object(doctor, "repository_present", return_value=True), \
+                patch.object(doctor.subprocess, "run", side_effect=FileNotFoundError):
+            with self.assertRaisesRegex(ValueError, "Git unavailable"):
+                kit.plan(SOURCE, self.target)
+        self.assertFalse(self.target.exists())
+
+    def test_standalone_workspace_needs_no_git(self):
+        # Filesystem repo detection is mocked because fixtures live inside this repo.
+        with patch.object(doctor, "repository_present", return_value=False), \
+                patch.object(doctor.subprocess, "run", side_effect=AssertionError("Git must not run")):
+            self.install()
+            errors, notes = doctor.check(self.target)
+            self.assertEqual(errors, [])
+            self.assertTrue(any("not applicable" in note for note in notes))
+
+    def test_git_timeout_and_broken_mac_shim_fail_before_writes(self):
+        for outcome, expected in ((subprocess.TimeoutExpired("git", 15), "15 seconds"),
+                                  (subprocess.CompletedProcess(["git"], 1), "cannot run")):
+            with patch.object(doctor, "repository_present", return_value=True):
+                if isinstance(outcome, Exception):
+                    mock = patch.object(doctor.subprocess, "run", side_effect=outcome)
+                else:
+                    mock = patch.object(doctor.subprocess, "run", return_value=outcome)
+                with mock, self.assertRaisesRegex(ValueError, expected):
+                    kit.plan(SOURCE, self.target)
+            self.assertFalse(self.target.exists())
+
+    def test_private_subdirectory_symlinks_and_extra_hardlinks_refused(self):
+        self.install()
+        local = self.target / ".nebius-local"
+        local.mkdir()
+        outside = self.base / "outside"
+        outside.mkdir()
+        link = local / "notes"
+        link.symlink_to(outside, target_is_directory=True)
+        self.assertTrue(any("symlink" in e for e in doctor.check(self.target)[0]))
+        link.unlink()
+        note = self.base / "synthetic-note"
+        note.write_text("synthetic private preference")
+        os.link(note, local / "other.md")
+        with self.assertRaisesRegex(ValueError, "Hard-linked"):
+            doctor.check(self.target)
+
+    def test_copied_bundle_cli_from_another_directory(self):
+        source = self.source_copy()
+        for extra in ([], ["--apply"], ["--apply"]):
+            run = subprocess.run([sys.executable, str(source / "scripts/bootstrap.py"),
+                                  "init", "--workspace", str(self.target), *extra],
+                                 cwd=self.base, capture_output=True, text=True)
+            self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+        self.assertIn("no files changed", run.stdout)
+        shutil.rmtree(source)
+        run = subprocess.run([sys.executable, str(self.target / ".nebius-kit/doctor.py")],
+                             cwd=self.base, capture_output=True, text=True)
+        self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+
+    def test_dangling_git_directory_never_passes_privacy(self):
+        self.target.mkdir()
+        (self.target / ".git").symlink_to(self.base / "missing-git", target_is_directory=True)
+        self.assertTrue(doctor.repository_present(self.target))
+        failed = subprocess.CompletedProcess(["git"], 128, stdout="", stderr="")
+        original_exists = Path.exists
+        # Hide the enclosing test repository so only the dangling marker remains.
+        with patch.object(Path, "exists", autospec=True,
+                          side_effect=lambda p: False if p.name == ".git" else original_exists(p)), \
+                patch.object(doctor, "run_git", return_value=failed):
+            self.assertEqual(doctor.git_privacy(self.target), ["Git repository could not be inspected"])
+
+    def test_git_environment_overrides_cannot_hide_private_tracking(self):
+        for name in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_COMMON_DIR",
+                     "GIT_CONFIG_COUNT", "GIT_CONFIG_VALUE_0"):
+            with patch.dict(os.environ, {name: "synthetic-sensitive-value"}):
+                with self.assertRaisesRegex(ValueError, name) as raised:
+                    kit.plan(SOURCE, self.target)
+                self.assertNotIn("synthetic-sensitive-value", str(raised.exception))
+                with self.assertRaisesRegex(ValueError, name):
+                    doctor.git_privacy(self.target)
+            self.assertFalse(self.target.exists())
+
+    def package_source(self):
+        source = self.source_copy()
+        for name in kit_package.EXTRAS - {doctor.RECORD, ".gitignore", "MANIFEST.sha256"}:
+            path = source / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(SOURCE / name, path)
+        changes, before = kit.plan(source, source)
+        kit.apply_plan(source, changes, before)
+        return source
+
+    def test_archive_allowlist_and_extracted_verification(self):
+        source = self.package_source()
+        canary = "synthetic-private-" + os.urandom(16).hex()
+        private = source / ".nebius-local"
+        private.mkdir()
+        (private / "STATE.md").write_text(canary)
+        (source / ".claude/settings.json").write_text(json.dumps({"synthetic": canary}))
+        (source / "unlisted.txt").write_text(canary)
+        output = source / "dist/test.zip"
+        self.assertEqual(kit_package.build_archive(source, output), len(kit_package.FILES))
+        extracted = self.base / "extracted colleague workspace"
+        with zipfile.ZipFile(output) as archive:
+            self.assertEqual(set(archive.namelist()), kit_package.FILES)
+            self.assertIn(".claude/skills/nebius-setup/SKILL.md", archive.namelist())
+            self.assertIn(".agents/skills/nebius-setup/SKILL.md", archive.namelist())
+            self.assertFalse(any(canary.encode() in archive.read(n) for n in archive.namelist()))
+            archive.extractall(extracted)
+        run = subprocess.run([sys.executable, str(extracted / "scripts/bootstrap.py"), "verify"],
+                             cwd=self.base, capture_output=True, text=True)
+        self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+        with self.assertRaisesRegex(ValueError, "already exists"):
+            kit_package.build_archive(source, output)
+
+    def test_archive_rejects_stale_generated_files_before_output(self):
+        source = self.package_source()
+        (source / "START_HERE.md").write_text("unreviewed edit")
+        output = source / "dist/test.zip"
+        with self.assertRaisesRegex(ValueError, "Changed"):
+            kit_package.build_archive(source, output)
+        self.assertFalse(output.exists())
 
 
 if __name__ == "__main__":

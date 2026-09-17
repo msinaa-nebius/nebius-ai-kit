@@ -9,7 +9,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from doctor import EXPECTED, IGNORE, RECORD, SKILLS, check, digest, read_record, safe_path
+from doctor import EXPECTED, IGNORE, RECORD, SKILLS, check, digest, prerequisites, read_record, safe_path
 
 ROOT = Path(__file__).absolute().parent.parent
 VERSION = "2.0.0-dev"
@@ -62,6 +62,10 @@ def payload(root):
 
 def plan(root, target, integrate=False):
     verify_bundle(root)
+    prerequisites(target)
+    override = safe_path(target, "AGENTS.override.md")
+    if override.exists() and override.stat().st_size:
+        raise ValueError("AGENTS.override.md shadows AGENTS.md; review integration manually; nothing written")
     previous = read_record(target)
     wanted = payload(root)
     changes, before, conflicts = {}, {}, []

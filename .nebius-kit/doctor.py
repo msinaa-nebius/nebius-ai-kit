@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -15,6 +16,42 @@ EXPECTED = FIXED | {f"{base}/{name}/SKILL.md" for base in
                    (".agents/skills", ".claude/skills") for name in SKILLS}
 RECORD = ".nebius-kit/install.json"
 IGNORE = "/.nebius-local/"
+GIT_TIMEOUT = 15
+GIT_OVERRIDES = {"GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_COMMON_DIR",
+                 "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+                 "GIT_NAMESPACE", "GIT_CEILING_DIRECTORIES", "GIT_CONFIG_PARAMETERS",
+                 "GIT_CONFIG_COUNT", "GIT_CONFIG", "GIT_CONFIG_GLOBAL", "GIT_CONFIG_SYSTEM"}
+
+
+def check_git_environment():
+    active = sorted(name for name in os.environ if name in GIT_OVERRIDES
+                    or name.startswith(("GIT_CONFIG_KEY_", "GIT_CONFIG_VALUE_")))
+    if active:
+        raise ValueError("Git environment overrides prevent reliable privacy checks; unset "
+                         + ", ".join(active) + " and retry (values are not displayed)")
+
+
+def run_git(*args):
+    """Bound checks, including macOS Git shims without installed developer tools."""
+    check_git_environment()
+    try:
+        return subprocess.run(["git", *args], capture_output=True, text=True,
+                              timeout=GIT_TIMEOUT)
+    except FileNotFoundError as exc:
+        raise ValueError("Git unavailable: ask your IT team to provide Git; nothing can verify repository privacy yet") from exc
+    except subprocess.TimeoutExpired as exc:
+        raise ValueError("Git did not respond within 15 seconds; resolve the local Git setup and retry") from exc
+
+
+def repository_present(root):
+    return any((p / ".git").exists() or (p / ".git").is_symlink()
+               for p in (root, *root.parents))
+
+
+def prerequisites(root):
+    check_git_environment()
+    if repository_present(root) and run_git("--version").returncode:
+        raise ValueError("Git is present but cannot run; resolve the local Git setup and retry")
 
 
 def digest(data):
@@ -52,17 +89,13 @@ def read_record(root):
 
 def git_privacy(root):
     """Check both tracked state and effective ignore, including nested overrides."""
-    try:
-        probe = subprocess.run(["git", "-C", str(root), "rev-parse", "--show-toplevel"],
-                               capture_output=True, text=True)
-    except FileNotFoundError:
-        return ["Git unavailable: tracking and effective ignore NOT VERIFIED"]
-    if probe.returncode:
-        if any((p / ".git").exists() for p in (root, *root.parents)):
-            return ["Git repository could not be inspected"]
+    check_git_environment()
+    if not repository_present(root):
         return []
-    tracked = subprocess.run(["git", "-C", str(root), "ls-files", "--", ".nebius-local"],
-                             capture_output=True, text=True)
+    probe = run_git("-C", str(root), "rev-parse", "--show-toplevel")
+    if probe.returncode:
+        return ["Git repository could not be inspected"]
+    tracked = run_git("-C", str(root), "ls-files", "--", ".nebius-local")
     if tracked.returncode or tracked.stdout.strip():
         return ["Private context is tracked or tracking could not be checked; resolve before saving"]
     candidates = [".nebius-local/ROLE-MAP.md", ".nebius-local/STATE.md"]
@@ -72,8 +105,7 @@ def git_privacy(root):
     if local.exists():
         candidates += [str(p.relative_to(root)) for p in local.rglob("*") if p.is_file()]
     for name in candidates:
-        result = subprocess.run(["git", "-C", str(root), "check-ignore", "-q", "--", name],
-                                capture_output=True)
+        result = run_git("-C", str(root), "check-ignore", "-q", "--", name)
         if result.returncode:
             return ["Private context is not effectively ignored; resolve before saving"]
     return []
@@ -98,10 +130,20 @@ def check(root):
         errors.append("Private-context ignore rule missing")
     for rel in (".nebius-local/ROLE-MAP.md", ".nebius-local/STATE.md"):
         safe_path(root, rel)
+    local = root / ".nebius-local"
+    if local.exists():
+        for path in local.rglob("*"):
+            if path.is_symlink():
+                errors.append("Private context contains a symlink; review before saving")
+                break
+            if not path.is_dir():
+                safe_path(root, str(path.relative_to(root)))
     errors.extend(git_privacy(root))
     notes = ["Assistant discovery: confirm in a new session opened at the workspace root",
              "Connectors/accounts: NOT VERIFIED by this offline check",
              "Operational authorization: NOT VERIFIED by installation"]
+    if not repository_present(root):
+        notes.append("No Git repository found: ignore rule present; tracking checks are not applicable until a repository is created")
     for name in SKILLS:
         # Read only the known legacy skill path, never global configuration/credentials.
         if any((Path.home() / base / "skills" / name / "SKILL.md").is_file()

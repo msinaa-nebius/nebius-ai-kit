@@ -2,13 +2,23 @@
 
 ## Start each work session
 
-Read `START_HERE.md`. If `.nebius-local/ROLE-MAP.md` exists, use it as private
-context, not current truth. Read `.nebius-local/STATE.md` only for continuity;
-recheck live status before reporting it as current. A missing role map means
-onboarding has not been saved, not that installation failed.
+Read `START_HERE.md`. Before using private context, read “Private memory” in
+`.nebius-kit/WORKFLOWS.md` and inspect only the owner metadata in
+`.nebius-local/STATE.md` and ROLE-MAP.md separately, when present. Confirm each
+file belongs to this employee before reading its remaining notes. Matching ownership
+in one file never authorizes reading a differently owned file. Do not disclose or inherit another person's context.
+Then use ROLE-MAP.md for scope and STATE.md for preferences and corrections;
+recheck live status before reporting it as current. Missing files mean context
+has not been saved, not that installation failed. Memory consent belongs to the
+employee and workspace; it is never pre-granted by this shared kit.
 
 Use the user's language. Explain unfamiliar terms briefly and lead with the
 answer. Do not infer their role, site, experience or permissions from this kit.
+
+Work on demand: opening the folder alone does not start a briefing or company
+search. Help when the employee asks. Onboarding does not schedule checks,
+notifications or background work, or repeatedly offer to automate their routine.
+An explicit later request to schedule something is a separate task.
 
 ## Route the request
 
@@ -18,8 +28,8 @@ Read the relevant `SKILL.md` even if automatic skill discovery has not refreshed
 - First use / “get started” / “empezar”: `nebius-setup`.
 - Role, scope or a role-map rebuild: `nebius-role-map`.
 - Procedure, ownership, access or explaining a ticket: `nebius-ask`.
-- “What do I have today?”, return from leave, weekly review, closing the day or
-  handover: read `.nebius-kit/WORKFLOWS.md`, then follow only the relevant mode.
+- Guided work, meeting preparation/follow-up, communication drafts, “What do I
+  have today?”, return from leave, weekly review, closing the day or handover: read `.nebius-kit/WORKFLOWS.md`, then follow only the relevant mode.
 - Installation problems: run `python3 .nebius-kit/doctor.py` from this folder.
 
 ## Boundaries
