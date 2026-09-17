@@ -215,7 +215,8 @@ def main():
                 print("Already installed; no files changed.")
             elif args.apply:
                 apply_plan(target, changes, before)
-                print("PASS: installed and checked. Open this folder and say 'get started'.")
+                print("PASS: files installed and checked. Personal onboarding is next.")
+                print("Continue here: read target START_HERE.md and .agents/skills/nebius-setup/SKILL.md (Claude: .claude/skills).")
                 print("Connectors and operational authorization are NOT VERIFIED.")
             else:
                 print("PREVIEW ONLY: no files written. Review, then add --apply.")

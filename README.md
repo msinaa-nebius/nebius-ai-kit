@@ -18,7 +18,8 @@ Open a local project in Codex or Claude Code and say:
 
 The assistant follows the installation contract below. You choose the destination
 if it is not clear, sign in to your own company accounts, confirm your role and
-choose whether it may remember safe context. Then you work on one real question.
+choose whether it may remember safe context. It asks about experience and preferred
+explanations, maps your responsibilities, then offers a first work question.
 No need to create AGENTS.md, CLAUDE.md or hidden skill folders yourself.
 
 **Already downloaded?** Open the extracted folder as the project and say “Empezar”
@@ -55,8 +56,10 @@ or “Get started”. Keep the whole folder, including hidden files.
    git initialization, commits, permissions changes or publication.
 6. Run the target's `.nebius-kit/doctor.py`, open **that target folder** in the
    assistant, then read START_HERE.md and its `nebius-setup` skill. If automatic
-   discovery has not refreshed, start a fresh session there. Report file checks,
-   current account/connectivity, saved context and first useful answer separately.
+   discovery has not refreshed, read the local skill directly and continue onboarding
+   in the same session. Restart only for an observed inability to use that target.
+   Report files, current-product connections, personalization and memory separately.
+   Check each command's exit status; a later success cannot erase an earlier failure.
    Do not promise the download or login is complete until it is verified.
 
 For reproducible distribution, share a reviewed fixed commit/release after the

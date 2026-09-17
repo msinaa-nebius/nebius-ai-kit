@@ -3,22 +3,29 @@
 Open **this folder** in Claude Code or Codex and say:
 
 > Get started. Check what is installed and which company systems you can read,
-> then help me with one real work question.
+> confirm my role, experience and preferences, and help me get started.
 
 Or say it in your own language. You do not need to know skill names.
 
 The assistant follows `AGENTS.md`; Claude imports it through `CLAUDE.md`.
-If this session was already open during installation, start a new session in this
-folder. If skills do not appear, ask it to read the relevant local `SKILL.md`.
+Continue in the same session by reading the relevant local `SKILL.md` directly if
+skills do not appear. Start another session only if this app cannot use the target
+folder here. These files supply shared working instructions; connections and logins
+belong to each app. Nothing runs in the background.
 
-## Three separate checks
+## Setup in three parts
 
 1. **Files installed:** `python3 .nebius-kit/doctor.py` checks the local kit.
 2. **Company access:** the assistant checks the tools actually available in the
    session and the outcome of scoped reads. Each person signs in themselves.
-3. **Useful first answer:** one work question answered with live sources,
-   uncertainty and the next step. No connector? Setup still gives a provisional
-   role map and explains what could not be verified.
+3. **Your buddy configured:** confirm role/team/site, cross-check responsibilities,
+   ask about experience and explanation preferences, and offer private memory.
+   Then choose a first task if you want. Missing access or skipped questions remain
+   visible gaps; neither should be disguised as completed personalization.
+
+If Python 3.9+ is unavailable, the assistant explains the unchecked installation
+and the organization's approved installation route. It can still help read-only;
+it must not silently install tools.
 
 Installation cannot log you in, grant permissions or certify safe operation.
 This kit does not replace company onboarding, safety training or approved procedures.

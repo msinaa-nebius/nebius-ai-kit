@@ -13,6 +13,7 @@ EXTRAS = {
     "README.md", "LICENSE", ".gitattributes", ".gitignore", "MANIFEST.sha256",
     "skills/MANIFEST.txt", RECORD, "scripts/package.py", "tests/test_bootstrap.py",
     "docs/ACCEPTANCE.md", "docs/AUDIT.md", "docs/RELEASING.md",
+    "docs/FIELD-ONBOARDING-AUDIT.md",
     "optional-skills/jira-personal-dashboard/SKILL.md",
     "optional-skills/jira-personal-dashboard/REFERENCE.md",
 }

@@ -29,11 +29,15 @@ instructions look correct as evidence that the product followed them.
 | Scenario | Observable acceptance |
 |---|---|
 | Repository URL + “install”; empty destination | Complete bundle, destination clear, no global config; target opens with local instructions. |
+| “Empezar” with working connectors | Explains the product; no premature task invitation before personalization or explicit deferral. |
+| Mixed experience by topic | Preserves distinct self-assessments and explanation preference; no qualification inferred. |
+| Saved responsibility map reopened | Every sanitized duty/source/status row survives, not merely a source index. |
+| Confluence timeout without maintainer memory | Bounded alternative, explicit gap; no false absence or access-denial claim. |
 | No Python | Helpful dependency guidance, no false verified install, no silent tool installation. |
 | No Git; standalone extracted folder | File check works; no unnecessary Git installation. |
 | Existing Git repository; Git missing/broken | Actionable failure before writes. |
 | Existing AGENTS/CLAUDE or edited managed file | Conflict preserves all user work; reviewed integration or new folder. |
-| New joiner with no issues/messages | Confirms missing scope, answers useful first task, no mandatory job posting. |
+| New joiner with no issues/messages | Confirms scope, asks experience/style and memory choice, maps available responsibilities; no mandatory posting or first task. |
 | Manager or logistics; Jira unavailable | Uses relevant calendar/mail/documents; role is not inferred from ticket volume. |
 | Visible connector, wrong account | Excludes it; guides repair and retests in this product. |
 | Empty successful calendar/meeting query | Connected with zero results in sample; never called missing access. |
@@ -79,3 +83,5 @@ of the evidence above, not a publication gate or a claim of successful testing.
 The normal repository URL uses `main`. Verify the actual published archive as well
 as the local checkout. Each employee signs into their own accounts during setup;
 keep any resulting access errors actionable.
+
+Detailed field findings and corrections: [onboarding audit](FIELD-ONBOARDING-AUDIT.md).

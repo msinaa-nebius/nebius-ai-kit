@@ -20,8 +20,9 @@ fields are leads until confirmed. An issue sample is observed activity, not scop
 covering a temporary project or having no assigned tickets does not define a job.
 Do not assume the maintainer's role, tools, site or permissions.
 
-Start with the few responsibilities relevant to the employee's first task; label
-the map as partial. Expand when useful or requested. Ask only for consequential
+During onboarding cover each responsibility heading in the available role baseline,
+not just the first task. Keep each row short and label incomplete coverage honestly.
+For a later focused work question, expand only the relevant part of the map. Ask only for consequential
 missing scope. A manager's responsibilities may have no Jira evidence. Use the
 systems where their actual work lives, including mail, calendars and SharePoint.
 
@@ -40,6 +41,11 @@ expand only where unanswered questions warrant it. Track complete, partial/limit
 failed and not searched, and never claim absence from a capped or failed search.
 Consult relevant Confluence, Jira, Slack channels and other connected systems as
 needed. Do not copy a roster of all visible projects/spaces as the person's scope.
+Discover source entry points from confirmed role/team/site and available search;
+the maintainer's memories or private bookmarks are not prerequisites. After a clear
+timeout, use at most one retry or supported alternative (such as the authenticated
+browser), then report the unresolved coverage. A timeout is not access denial.
+Read relevant sections, not entire unrelated rosters.
 Site spaces supplement company guidance; one employee's visibility proves nothing
 about another's. No DMs in general role discovery.
 
@@ -84,13 +90,18 @@ Generated <date> by nebius-ai-kit 2.0.0-dev
 Owner: <employee-confirmed name or alias>
 Role / team / site: <confirmed scope; unknown where not established>
 Basis: <user confirmation and/or sanitized source links, date>
-Coverage: partial first pass; <sources checked and not checked>
+Coverage: <complete against named baseline, or partial with specific gaps>
 
 ## My corrections and notes
 <Reserved user-authored notes, initially empty. Never fill with inferred duties.>
 
 ## Scope and sources
-<Confirmed responsibility — source link — owner by role — uncertainty if any.>
+| Responsibility category | Basis / source link | Scope and source status | Owner by role / checked |
+|---|---|---|---|
+| <Sanitized category, no procedure text> | <User-confirmed or source link> | <Confirmed/candidate; approved/draft/outdated/unknown> | <Known owner or unknown; date> |
+
+Keep one row for each mapped responsibility, including unsupported candidates with
+an explicit gap. Do not collapse this table into a list of source links.
 
 ## Open questions
 <Only useful unresolved scope or ownership questions.>
@@ -105,7 +116,7 @@ rebuild or removal of ambiguous notes requires review; memory consent is not
 permission to erase someone's work. Existing older kit maps are valid leads;
 confirm ownership and preserve their headings/notes instead of forcing migration.
 
-After saving, reread changed sections, verify reserved notes survived and report
+After saving, compare the saved rows with the presented map, reread changed sections, verify reserved notes survived and report
 the actual path and meaningful changes. In future sessions, use this map plus
 STATE.md corrections and recheck source truth when needed; do not rebuild solely
 because time passed. Never equate a saved map with connected tools or authorization.
