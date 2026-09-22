@@ -1,5 +1,5 @@
 ---
-# nebius-ai-kit 2.0.0-dev — workspace-managed copies; local edits are preserved as conflicts
+# nebius-ai-kit 2.0.0 — workspace-managed copies; local edits are preserved as conflicts
 name: nebius-setup
 description: Set up a Nebius employee's role buddy and on-demand work assistant in this workspace. Check local installation and live connections, confirm scope, offer private memory and help with one real task. Use for first use, get started, empezar, onboarding, or checking a setup after changing computer or assistant.
 ---
@@ -127,7 +127,17 @@ pass. Consent applies to this employee/workspace, not every colleague using the 
 A decline remains useful and must not trigger repeated pressure. Existing valid
 consent need not be requested again. Unknown interpretations still need confirmation.
 
-## 5. Verify continuity and offer useful work
+## 5. Verify hooks and continuity, then offer useful work
+
+Read `.nebius-kit/HOOKS.md` and guide its activation in the current assistant,
+one plain-language step at a time. The employee reviews whatever trust the product
+requires; never approve it through a bypass. Check fresh hook delivery before tools,
+then ownership and actual preference retrieval/application separately. Repeat in
+the other assistant only if the employee uses it. Explicitly deferred or blocked
+activation means manual retrieval, not automatically working memory. A fresh chat
+is justified here to test actual delivery; ordinary skill discovery alone is not.
+Do not repeat role questions or consent already confirmed for this employee.
+
 
 If a work task was requested, route it: company questions and tickets to `nebius-ask`; role
 scope to `nebius-role-map`; daily planning, meeting prep, guided work, drafts and
@@ -146,7 +156,8 @@ absence of a map is not a reason to repeat the consent question or discard scope
 Before closing, check: plain-language product explanation; local file check;
 current-product capability results and gaps; confirmed role/team/site; sourced
 responsibility map with uncertainties; experience and explanation preferences;
-memory choice and verified save or session-only use. Each must be addressed or
+memory choice and verified save or session-only use; hook delivery and behavioral
+continuity results, or explicit manual fallback. Each must be addressed or
 explicitly deferred, not silently omitted. Recording a failure does not make a check verified. When
 sources remain blocked, describe “initial setup with source verification pending”,
 not a complete or validated role map. No connectors or a memory decline need

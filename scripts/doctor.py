@@ -8,12 +8,15 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+import hook_config
 
 SKILLS = ("nebius-setup", "nebius-role-map", "nebius-ask")
 FIXED = {"AGENTS.md", "CLAUDE.md", "START_HERE.md", ".nebius-kit/WORKFLOWS.md",
-         ".nebius-kit/doctor.py"}
+         ".nebius-kit/doctor.py", ".nebius-kit/hook_config.py",
+         ".nebius-kit/memory_hook.py", ".nebius-kit/HOOKS.md"}
 EXPECTED = FIXED | {f"{base}/{name}/SKILL.md" for base in
                    (".agents/skills", ".claude/skills") for name in SKILLS}
+LEGACY_EXPECTED = EXPECTED - {".nebius-kit/hook_config.py", ".nebius-kit/memory_hook.py", ".nebius-kit/HOOKS.md"}
 RECORD = ".nebius-kit/install.json"
 IGNORE = "/.nebius-local/"
 GIT_TIMEOUT = 15
@@ -79,11 +82,15 @@ def read_record(root):
         return None
     record = json.loads(path.read_text(encoding="utf-8"))
     if (not isinstance(record, dict) or record.get("schema") != 1 or not isinstance(record.get("files"), dict)
-            or set(record["files"]) != EXPECTED
+            or set(record["files"]) not in (EXPECTED, LEGACY_EXPECTED)
             or any(not isinstance(v, str) or not re.fullmatch(r"[0-9a-f]{64}", v)
                    for v in record["files"].values())
             or not isinstance(record.get("installed_at"), str)):
         raise ValueError("Invalid install record; no paths from it will be followed")
+    if "hook_files" in record and (not isinstance(record["hook_files"], dict)
+            or set(record["hook_files"]) != set(hook_config.FILES)
+            or any(not isinstance(v, str) or not re.fullmatch(r"[0-9a-f]{64}", v) for v in record["hook_files"].values())):
+        raise ValueError("Invalid hook install record")
     return record
 
 
@@ -125,6 +132,12 @@ def check(root):
             errors.append(f"Missing: {rel}")
         elif digest(path.read_bytes()) != wanted:
             errors.append(f"Changed: {rel} (preserved; review before reinstalling)")
+    if set(record["files"]) != EXPECTED or "hook_files" not in record:
+        errors.append("Older workspace installation: run the latest installer against this folder")
+    for rel, wanted in record.get("hook_files", {}).items():
+        path = safe_path(root, rel)
+        if not path.exists() or hook_config.fingerprint(path.read_bytes()) != wanted:
+            errors.append("Missing or changed Nebius hooks: " + rel)
     ignore = safe_path(root, ".gitignore")
     if not ignore.exists() or IGNORE not in ignore.read_text(encoding="utf-8").splitlines():
         errors.append("Private-context ignore rule missing")
@@ -139,7 +152,8 @@ def check(root):
             if not path.is_dir():
                 safe_path(root, str(path.relative_to(root)))
     errors.extend(git_privacy(root))
-    notes = ["Assistant discovery: confirm in a new session opened at the workspace root",
+    notes = ["Hooks: configuration only; approval and real delivery NOT VERIFIED. Follow .nebius-kit/HOOKS.md",
+             "Assistant discovery: confirm in a new session opened at the workspace root",
              "Connectors/accounts: NOT VERIFIED by this offline check",
              "Operational authorization: NOT VERIFIED by installation"]
     if not repository_present(root):

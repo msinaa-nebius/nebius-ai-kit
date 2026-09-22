@@ -4,7 +4,7 @@ Your **role buddy and personal work assistant** in Codex or Claude Code. Underst
 how work is done here, prepare your day and meetings, and draft replies. It adapts
 to your role, team and site, and helps **when you ask**.
 
-**Workspace edition · 2.0.0-dev.** Use the current `main` branch for this complete
+**Workspace edition · 2.0.0.** Use the current `main` branch for this complete
 workspace setup. The historical v1.1 release installs global skills only and is
 not the installation route below. [Validation scope](docs/ACCEPTANCE.md).
 
@@ -12,9 +12,9 @@ not the installation route below. [Validation scope](docs/ACCEPTANCE.md).
 
 Open a local project in Codex or Claude Code and say:
 
-> Install https://github.com/msinaa-nebius/nebius-ai-kit as my Nebius work assistant.
-> Follow the repository's current README. Preserve anything I already have, then
-> help me get started.
+> Install or update https://github.com/msinaa-nebius/nebius-ai-kit from main in
+> my Nebius work folder. Update the kit, preserve my private notes and unrelated
+> settings, guide any hook approval, and verify memory retrieval in a fresh chat.
 
 The assistant follows the installation contract below. You choose the destination
 if it is not clear, sign in to your own company accounts, confirm your role and
@@ -58,7 +58,8 @@ or “Get started”. Keep the whole folder, including hidden files.
    assistant, then read START_HERE.md and its `nebius-setup` skill. If automatic
    discovery has not refreshed, read the local skill directly and continue onboarding
    in the same session. Restart only for an observed inability to use that target.
-   Report files, current-product connections, personalization and memory separately.
+   Follow `.nebius-kit/HOOKS.md` for hook review and fresh-chat verification.
+   Report files, hooks, current-product connections, personalization and memory separately.
    Check each command's exit status; a later success cannot erase an earlier failure.
    Do not promise the download or login is complete until it is verified.
 
@@ -112,10 +113,39 @@ by onboarding or memory consent. Shared actions need specific authorization.
 
 ## Update or recover
 
-Use a newly reviewed source bundle, preview the existing destination and apply.
-Unchanged kit files update; private context and edited files are preserved. Repeat
-installation is a no-op. A missing managed file can be restored; a modified one
-needs review. There is no force-overwrite option.
+Use the current **main** source archive in a separate source folder, not an old
+release ZIP or a `git pull` over someone's working notes. Preview and apply to the
+**existing work folder**; do not extract over it. This updates kit-managed files in
+place and preserves `.nebius-local/`, unrelated files and other hook/settings keys.
+Repeat installation is a no-op. The installer accepts the older workspace install
+record and upgrades it. Never delete the record to bypass a conflict.
+
+**v1 / v1.1 global-only installation:** those versions installed skills, not a
+complete workspace. Install the current workspace as above. Then, from the reviewed
+source folder, run `python3 scripts/legacy.py` to preview existing legacy Nebius
+skills in both assistants (including the older `.agents/skills` location). Apply
+with `--apply` within the employee's explicit install/update authorization. This
+replaces only existing recognized Nebius skills; it never touches other skills,
+authentication or global settings. Unknown edits stop the whole migration for
+review. It does not automatically import old personal context. Both assistants
+must follow the new folder's local instructions; global discovery may need a new
+session. Keep the source folder until workspace and legacy migration both pass.
+
+**Modified kit files:** the preview names conflicts and writes nothing. Inspect
+those exact files and preserve useful employee rules before replacing obsolete kit
+content with `--replace-file PATH` (repeat per reviewed file). This flag cannot
+replace private notes or settings. For edited global skills, `legacy.py
+--replace-skill NAME` is the equivalent explicit, reviewed replacement. Do not
+blindly pass every file. Existing non-kit instructions can instead use `--integrate`.
+Hook settings are merged; edited Nebius handlers require a scoped manual review.
+
+**Hooks:** installation prepares both apps; each laptop/product must complete its
+own trust review. The assistant follows [this short guide](templates/HOOKS.md),
+checks a fresh chat and a subsequent message, then tests a real saved preference.
+A pending approval or company restriction is reported as pending, never passed.
+The hooks deliver a retrieval reminder; the assistant reads private preferences
+only after confirming their owner. No login, approval database or private memory
+is copied from the maintainer's laptop.
 
 Run `python3 .nebius-kit/doctor.py` for installation problems. An
 `AGENTS.override.md`, conflicting parent instructions or old global skills may

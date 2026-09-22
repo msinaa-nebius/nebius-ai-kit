@@ -37,3 +37,11 @@ its actual source archive, verify its files and recheck the README install path.
 Update the README's distribution status truthfully as part of the release. A tagged
 stable release requires completed product acceptance, not only a green unit suite.
 Never distribute an employee's working folder, which may contain ignored data.
+
+## Memory/upgrade releases
+
+Follow `MEMORY-UPGRADE-VALIDATION.md` and keep legacy-hashes.json populated with
+SHA-256 values of the three exact historical SKILL.md files from reviewed released
+commits. Never hash private/custom user files into that registry. Package settings
+are synthesized from the public hook configuration, never copied from a laptop.
+Hook changes can require new human trust review; do not distribute approval state.

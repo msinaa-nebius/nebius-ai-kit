@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c 'from pathlib import Path; import runpy; p=Path.cwd().resolve(); r=next((d for d in (p,*p.parents) if (d/\".nebius-kit/install.json\").is_file()),None); assert r is not None,\"Open the installed Nebius workspace\"; runpy.run_path(str(r/\".nebius-kit/memory_hook.py\"),run_name=\"__main__\")'",
+            "timeout": 5,
+            "statusMessage": "Nebius: retrieve workspace memory"
+          }
+        ],
+        "matcher": "startup|resume|clear|compact"
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c 'from pathlib import Path; import runpy; p=Path.cwd().resolve(); r=next((d for d in (p,*p.parents) if (d/\".nebius-kit/install.json\").is_file()),None); assert r is not None,\"Open the installed Nebius workspace\"; runpy.run_path(str(r/\".nebius-kit/memory_hook.py\"),run_name=\"__main__\")'",
+            "timeout": 5,
+            "statusMessage": "Nebius: retrieve workspace memory"
+          }
+        ]
+      }
+    ]
+  }
+}

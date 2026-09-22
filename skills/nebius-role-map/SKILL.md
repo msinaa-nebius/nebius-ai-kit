@@ -1,5 +1,5 @@
 ---
-# nebius-ai-kit 2.0.0-dev — workspace-managed copies; local edits are preserved as conflicts
+# nebius-ai-kit 2.0.0 — workspace-managed copies; local edits are preserved as conflicts
 name: nebius-role-map
 description: Build or update a compact map of a Nebius employee's confirmed scope, relevant sources and open ownership questions. Use during onboarding, for role changes, or when asked to rebuild the role map or explain responsibilities. Does not infer a whole role from recent tickets.
 ---
@@ -86,7 +86,7 @@ ownership fields and reserved heading:
 
 ```markdown
 # Role map
-Generated <date> by nebius-ai-kit 2.0.0-dev
+Generated <date> by nebius-ai-kit 2.0.0
 Owner: <employee-confirmed name or alias>
 Role / team / site: <confirmed scope; unknown where not established>
 Basis: <user confirmation and/or sanitized source links, date>

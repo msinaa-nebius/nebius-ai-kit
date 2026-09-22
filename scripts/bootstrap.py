@@ -8,13 +8,14 @@ import re
 import sys
 import tempfile
 from pathlib import Path
+import hook_config
 
 from doctor import EXPECTED, IGNORE, RECORD, SKILLS, check, digest, prerequisites, read_record, safe_path
 
 ROOT = Path(__file__).absolute().parent.parent
-VERSION = "2.0.0-dev"
-SOURCES = {"scripts/bootstrap.py", "scripts/doctor.py"} | {
-    f"templates/{name}" for name in ("AGENTS.md", "CLAUDE.md", "START_HERE.md", "WORKFLOWS.md")
+VERSION = "2.0.0"
+SOURCES = {"scripts/bootstrap.py", "scripts/doctor.py", "scripts/hook_config.py", "scripts/memory_hook.py", "scripts/legacy.py", "scripts/legacy-hashes.json"} | {
+    f"templates/{name}" for name in ("AGENTS.md", "CLAUDE.md", "START_HERE.md", "WORKFLOWS.md", "HOOKS.md")
 } | {f"skills/{name}/SKILL.md" for name in SKILLS}
 
 
@@ -52,6 +53,9 @@ def payload(root):
               for name in ("AGENTS.md", "CLAUDE.md", "START_HERE.md")}
     result[".nebius-kit/WORKFLOWS.md"] = (root / "templates/WORKFLOWS.md").read_bytes()
     result[".nebius-kit/doctor.py"] = (root / "scripts/doctor.py").read_bytes()
+    for name in ("hook_config.py", "memory_hook.py"):
+        result[".nebius-kit/" + name] = (root / "scripts" / name).read_bytes()
+    result[".nebius-kit/HOOKS.md"] = (root / "templates/HOOKS.md").read_bytes()
     for name in SKILLS:
         data = (root / "skills" / name / "SKILL.md").read_bytes()
         for base in (".claude/skills", ".agents/skills"):
@@ -60,7 +64,7 @@ def payload(root):
     return result
 
 
-def plan(root, target, integrate=False):
+def plan(root, target, integrate=False, replace_files=()):
     verify_bundle(root)
     prerequisites(target)
     override = safe_path(target, "AGENTS.override.md")
@@ -68,6 +72,8 @@ def plan(root, target, integrate=False):
         raise ValueError("AGENTS.override.md shadows AGENTS.md; review integration manually; nothing written")
     previous = read_record(target)
     wanted = payload(root)
+    if set(replace_files) - set(wanted):
+        raise ValueError("--replace-file accepts only managed kit files, never private notes or settings")
     changes, before, conflicts = {}, {}, []
     for rel, data in wanted.items():
         path = safe_path(target, rel)
@@ -81,6 +87,8 @@ def plan(root, target, integrate=False):
                 marker = b"\n<!-- nebius-ai-kit:start -->\n"
                 if rel in ("AGENTS.md", "CLAUDE.md") and marker in old:
                     data = old.split(marker, 1)[0] + marker + data + b"<!-- nebius-ai-kit:end -->\n"
+            elif rel in replace_files:
+                pass  # Exact reviewed replacement, explicitly requested on CLI.
             elif integrate and not previous and rel in ("AGENTS.md", "CLAUDE.md"):
                 if b"<!-- nebius-ai-kit:" in old:
                     conflicts.append(rel)
@@ -95,6 +103,18 @@ def plan(root, target, integrate=False):
     if conflicts:
         raise ValueError("Conflicts preserved; nothing written: " + ", ".join(conflicts)
                          + ". Use a new workspace, or review --integrate for existing instruction files.")
+    hook_hashes = {}
+    for rel in hook_config.FILES:
+        path = safe_path(target, rel)
+        old = path.read_bytes() if path.exists() else None
+        new = hook_config.merge(old, codex=rel.startswith(".codex/"))
+        prior = (previous or {}).get("hook_files", {}).get(rel)
+        if (old and hook_config.owned(hook_config.parse(old)) and new != old
+                and hook_config.fingerprint(old) != prior):
+            raise ValueError("Edited Nebius hooks preserved; review manually: " + rel)
+        hook_hashes[rel] = hook_config.fingerprint(new)
+        if new != old:
+            changes[rel], before[rel] = new, old
     for rel in (".nebius-local/ROLE-MAP.md", ".nebius-local/STATE.md"):
         safe_path(target, rel)
     ignore_path = safe_path(target, ".gitignore")
@@ -103,7 +123,7 @@ def plan(root, target, integrate=False):
         # Append so prior root-level negations cannot undo this rule.
         changes[".gitignore"] = (old_ignore or b"") + b"\n# Private Nebius AI context\n" + IGNORE.encode() + b"\n"
         before[".gitignore"] = old_ignore
-    record = {"schema": 1, "version": VERSION,
+    record = {"schema": 1, "version": VERSION, "hook_files": hook_hashes,
               "installed_at": previous["installed_at"] if previous else
               datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "bundle_sha256": digest((root / "MANIFEST.sha256").read_bytes()),
@@ -177,6 +197,7 @@ def main():
     init.add_argument("--workspace", type=Path, required=True)
     init.add_argument("--apply", action="store_true")
     init.add_argument("--integrate", action="store_true", help="append kit rules to existing instruction files")
+    init.add_argument("--replace-file", action="append", default=[], help="replace this exact reviewed managed file; repeat per conflict")
     sub.add_parser("verify", help="verify source bundle and generated local installation")
     sub.add_parser("manifest", help="maintainer: regenerate checksums after reviewed source edits")
     args = parser.parse_args()
@@ -204,7 +225,7 @@ def main():
             if any(folder == target or folder in target.parents for folder in
                    (Path.home() / name for name in (".claude", ".codex", ".agents"))):
                 raise ValueError("Choose a workspace outside global assistant configuration")
-            changes, before = plan(ROOT, target, args.integrate)
+            changes, before = plan(ROOT, target, args.integrate, args.replace_file)
             print("Workspace:", target)
             for rel in changes:
                 print(("CREATE " if before[rel] is None else "UPDATE ") + rel)
@@ -217,7 +238,8 @@ def main():
                 apply_plan(target, changes, before)
                 print("PASS: files installed and checked. Personal onboarding is next.")
                 print("Continue here: read target START_HERE.md and .agents/skills/nebius-setup/SKILL.md (Claude: .claude/skills).")
-                print("Connectors and operational authorization are NOT VERIFIED.")
+                print("Next: follow .nebius-kit/HOOKS.md for approval and a fresh-chat delivery test in each assistant.")
+                print("Hooks activation, connectors and operational authorization are NOT VERIFIED.")
             else:
                 print("PREVIEW ONLY: no files written. Review, then add --apply.")
         return 0

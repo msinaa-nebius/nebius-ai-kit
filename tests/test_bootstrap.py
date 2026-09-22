@@ -339,7 +339,9 @@ class BootstrapTests(unittest.TestCase):
         private = source / ".nebius-local"
         private.mkdir()
         (private / "STATE.md").write_text(canary)
-        (source / ".claude/settings.json").write_text(json.dumps({"synthetic": canary}))
+        settings = json.loads((source / ".claude/settings.json").read_text())
+        settings["synthetic"] = canary
+        (source / ".claude/settings.json").write_text(json.dumps(settings))
         (source / "unlisted.txt").write_text(canary)
         output = source / "dist/test.zip"
         self.assertEqual(kit_package.build_archive(source, output), len(kit_package.FILES))

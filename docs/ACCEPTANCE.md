@@ -1,3 +1,5 @@
+Current memory/upgrade validation: [2.0 acceptance](MEMORY-UPGRADE-VALIDATION.md).
+
 # Acceptance and release evidence
 
 The product promise is a role buddy plus an on-demand work assistant, in one local

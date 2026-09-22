@@ -109,12 +109,16 @@ may need repeating later. Do not repeatedly ask someone who declined.
 With that agreement, maintain concise sections in STATE.md for preferences,
 confirmed scope corrections, source pointers and generalized lessons. Each entry
 has a date and its basis (user correction or a source link). Read relevant entries
-at session start. Use ROLE-MAP.md for the role/source map, STATE.md for corrections
+before each substantive answer, after checking ownership. Retrieve the current
+version even when a previous turn read it: another chat may have corrected it.
+Use ROLE-MAP.md for the role/source map, STATE.md for corrections
 and continuity; link instead of copying the same fact into both. A new role map
 must consider the confirmed corrections in STATE.md and preserve user-owned notes.
 
 Before each save, check the workspace doctor, effective Git ignore rules and
-tracked files. Refuse unsafe or outside-workspace destinations. Keep the existing
+tracked files when the folder is in a Git repository. For a standalone folder,
+accept the doctor's explicit tracking-not-applicable result; do not install or
+initialize Git merely to save memory. Refuse unsafe or outside-workspace destinations. Keep the existing
 file and user-authored sections intact; make only scoped updates. If an existing
 STATE.md has an unclear structure or conflicting notes, show the proposed change
 before applying. Never overwrite unrelated work to fit a template.
@@ -128,7 +132,11 @@ After a useful correction or completed work question:
 3. Update the matching entry instead of appending duplicates. Replace outdated
    assistant-owned entries when the user clearly corrects them; ask about ambiguous
    contradictions and changes to user-authored notes.
-4. Briefly say what changed. If there is nothing reusable, save nothing. On the next
+4. Give each durable correction its scope (when it applies), what to do/avoid,
+   date, basis and a short sanitized application example. Reopen the saved entry
+   and check the prepared answer against it before claiming it is remembered.
+   Keep one current version; clearly mark superseded reasoning if retained.
+5. Briefly say what changed. If there is nothing reusable, save nothing. On the next
    relevant task, apply the correction; accumulating notes alone is not improvement.
 
 Never retain source payloads, ticket status, meeting contents, personal HR details,
@@ -141,8 +149,10 @@ correction; “stop remembering” records revocation and stops automatic saves.
 “Forgetting” removes only the requested entries after a clear user request, and
 explains that other chat histories, backups or native product memories are separate.
 No background jobs, model training, shared-kit edits, commits or global memory
-writes are authorized by this agreement. No scripts automatically learn from chats:
-these are instructions the assistant must follow and verify during work.
+writes are authorized by this agreement. The read-only hooks remind the assistant to retrieve current agreements; they
+do not read private files or learn from chats. Ownership, retrieval, capture and
+application remain instructions the assistant must follow and verify during work.
+See `HOOKS.md` for automatic delivery checks and manual fallback.
 Any retained capability check records its date, assistant/runtime and tested scope;
 it is a past observation, never a credential or proof of current access. Recheck the
 tools and access needed for the current task, especially after switching assistants.

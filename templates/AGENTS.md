@@ -20,6 +20,19 @@ search. Help when the employee asks. Onboarding does not schedule checks,
 notifications or background work, or repeatedly offer to automate their routine.
 An explicit later request to schedule something is a separate task.
 
+## Memory on every turn
+
+The local hooks deliver `NEBIUS_MEMORY_RETRIEVAL_V1`: a public retrieval reminder,
+not private memory. Before each substantive answer, verify ownership as above and
+reread current STATE.md preferences/corrections and the relevant role/topic entries.
+Do not rely on a previous turn's copy when another chat may have corrected it.
+Reuse established session identity unless it changes; never ask the same confirmed
+question every turn. With no saved memory, continue normally. If the hook did not
+arrive, follow this same retrieval manually; read `.nebius-kit/HOOKS.md` for repair.
+Never claim activation from a config file, manual script run or pasted marker.
+On “remember this”, follow the scoped consent in WORKFLOWS: save one canonical rule,
+reopen it, check the answer against it, and only then confirm what was remembered.
+
 ## Route the request
 
 Skills are in `.agents/skills/` (Codex) and `.claude/skills/` (Claude).

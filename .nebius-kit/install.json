@@ -1,19 +1,26 @@
 {
-  "bundle_sha256": "4cf8f003474afba414459c5995ba1605627e688e45dd31572927edddd78d11b0",
+  "bundle_sha256": "2042c14873069cde233afbd760149b5cd2c4bae130494a5e8ceeb50772f200d4",
   "files": {
-    ".agents/skills/nebius-ask/SKILL.md": "edbf5a1a0af747e5f74681bcfdd6cb545befa5192e156544e579fb5ef81721bd",
-    ".agents/skills/nebius-role-map/SKILL.md": "bc797a7f289519099fe58fe1688314b94e0f7f4cc32e4eb98a7bcc3ad892903e",
-    ".agents/skills/nebius-setup/SKILL.md": "389524b4b22a9bbc1213373386efc0dc7d785b0f5da99a5db3a36471d5058578",
-    ".claude/skills/nebius-ask/SKILL.md": "edbf5a1a0af747e5f74681bcfdd6cb545befa5192e156544e579fb5ef81721bd",
-    ".claude/skills/nebius-role-map/SKILL.md": "bc797a7f289519099fe58fe1688314b94e0f7f4cc32e4eb98a7bcc3ad892903e",
-    ".claude/skills/nebius-setup/SKILL.md": "389524b4b22a9bbc1213373386efc0dc7d785b0f5da99a5db3a36471d5058578",
-    ".nebius-kit/WORKFLOWS.md": "c95520bd73b86bdb0758c97ff139614366ed8f734b6b814f6a71b238bce9aa6c",
-    ".nebius-kit/doctor.py": "af992058834799dcb9b55271c569e6970bf5be9a3fee435980b5084f530bed41",
-    "AGENTS.md": "4cb77e18e58b8304eca6a452059e565e77196c9bc38dd82e0d7835b4a46671fc",
+    ".agents/skills/nebius-ask/SKILL.md": "550fdceca122fdb9882e7ce32281e2cb244b62f1d14fb75adb4404c3a8041f9d",
+    ".agents/skills/nebius-role-map/SKILL.md": "adadac6e4ae5e1d27504507984a88fa4cf398595fdb574840a6992498fda1709",
+    ".agents/skills/nebius-setup/SKILL.md": "50a00270c8d31c6a6d366f49e175d6b26b0808fc63bd73709dad1bcae7683035",
+    ".claude/skills/nebius-ask/SKILL.md": "550fdceca122fdb9882e7ce32281e2cb244b62f1d14fb75adb4404c3a8041f9d",
+    ".claude/skills/nebius-role-map/SKILL.md": "adadac6e4ae5e1d27504507984a88fa4cf398595fdb574840a6992498fda1709",
+    ".claude/skills/nebius-setup/SKILL.md": "50a00270c8d31c6a6d366f49e175d6b26b0808fc63bd73709dad1bcae7683035",
+    ".nebius-kit/HOOKS.md": "62f94af949f70e937106beb622f60c3989e6b42ac290ad813e8ffcee53ed4f50",
+    ".nebius-kit/WORKFLOWS.md": "65a7af0d63406652342268201688da02d15c9f13e6d48e984595667b3f08087b",
+    ".nebius-kit/doctor.py": "e0c523c30f6850deeb5b5ece71e3f0ed003fd012e602d42b5d08f48bb144a9eb",
+    ".nebius-kit/hook_config.py": "d2cada7095b75b2fb322fd8f762d14a11164d31ec12dc7ea4e0398b6ffe8fb13",
+    ".nebius-kit/memory_hook.py": "aaead64df2f6a36b4ff58522e8e1c7f211926594488967b3d18a8080a45b9bf0",
+    "AGENTS.md": "d05f44052eb78596eb4c6d1a80d0147deb235bb6325ac9383ffd738a72e5bf3d",
     "CLAUDE.md": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49",
-    "START_HERE.md": "0dd7c5a5918b68ea0ec88fe384960b8ab89c8f6f4bd7fbaeabd4d7802e20d47e"
+    "START_HERE.md": "cda1f9e2934c74c874e2459ffa33565147d5388b68e124a3ab31028b563d42b7"
+  },
+  "hook_files": {
+    ".claude/settings.json": "badf8304c9073872e4f512d554375be221b7c6084eb15ffd9a08ba7c2fcb74d8",
+    ".codex/hooks.json": "300dc415ae40939358e4b9ca8fc550e7ab9029ac47db8f2e14d0174da5505343"
   },
   "installed_at": "2026-09-10T12:59:31.663634+00:00",
   "schema": 1,
-  "version": "2.0.0-dev"
+  "version": "2.0.0"
 }

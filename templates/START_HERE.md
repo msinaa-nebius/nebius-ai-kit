@@ -57,3 +57,12 @@ The assistant never needs your password pasted into the chat.
 Your role map is optional. With no saved context, discovery may need repeating in a
 future session. Old maps elsewhere are not imported automatically: confirm the
 right person, team and destination first.
+
+## Finish automatic memory retrieval
+
+The installer prepares hooks for both assistants. Follow
+[the short activation guide](.nebius-kit/HOOKS.md) in the assistant you use.
+It covers any required human review and a fresh-chat test. Files installed does
+not mean hooks approved or memory retrieved. If approval is pending, the assistant
+can still retrieve your verified context manually. No private context is loaded
+by the hooks before ownership checks.

@@ -1,5 +1,5 @@
 ---
-# nebius-ai-kit 2.0.0-dev — workspace-managed copies; local edits are preserved as conflicts
+# nebius-ai-kit 2.0.0 — workspace-managed copies; local edits are preserved as conflicts
 name: nebius-ask
 description: Answers "how do we do X here?" for a Nebius employee by searching Confluence, Jira and Slack together, surfacing where the sources contradict each other, naming the owning team, and saying explicitly what could not be found. Use for questions about Nebius-internal procedure, tooling, process or terminology, for "explain this ticket to me", for "who owns this", and whenever someone would otherwise have interrupted a colleague to ask about company-internal matters. Also "¿cómo se hace X aquí?", "explícame este ticket", "¿quién lleva esto?", "как у нас делается X?", "кто за это отвечает?", "hoe doen we X hier?".
 ---

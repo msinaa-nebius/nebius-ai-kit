@@ -6,6 +6,8 @@ import sys
 import zipfile
 from pathlib import Path
 
+import hook_config
+
 from bootstrap import ROOT, SOURCES, VERSION, payload, verify_bundle
 from doctor import EXPECTED, RECORD, check, safe_path
 
@@ -13,11 +15,11 @@ EXTRAS = {
     "README.md", "LICENSE", ".gitattributes", ".gitignore", "MANIFEST.sha256",
     "skills/MANIFEST.txt", RECORD, "scripts/package.py", "tests/test_bootstrap.py",
     "docs/ACCEPTANCE.md", "docs/AUDIT.md", "docs/RELEASING.md",
-    "docs/FIELD-ONBOARDING-AUDIT.md",
+    "docs/FIELD-ONBOARDING-AUDIT.md", "docs/MEMORY-UPGRADE-VALIDATION.md", "tests/test_hooks_upgrade.py",
     "optional-skills/jira-personal-dashboard/SKILL.md",
     "optional-skills/jira-personal-dashboard/REFERENCE.md",
 }
-FILES = SOURCES | EXPECTED | EXTRAS
+FILES = SOURCES | EXPECTED | EXTRAS | set(hook_config.FILES)
 
 
 def build_archive(root, output):
@@ -39,7 +41,9 @@ def build_archive(root, output):
     for rel, data in payload(root).items():
         if safe_path(root, rel).read_bytes() != data:
             raise ValueError("Generated workspace copies differ from canonical source")
-    contents = {name: safe_path(root, name).read_bytes() for name in sorted(FILES)}
+    contents = {name: (hook_config.merge(None, codex=name.startswith(".codex/"))
+                      if name in hook_config.FILES else safe_path(root, name).read_bytes())
+                for name in sorted(FILES)}
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for name, data in contents.items():
